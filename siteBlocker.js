@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         siteBlocker
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0
+// @version      1.0.1
 // @description  Script to block any site with regular expression. Redirects to google.com instead.
 // @author       https://github.com/smkapilgupta
 // @match        *://*/*
@@ -20,7 +20,7 @@
     const blockedTermsRegex="nipslip|(hidemy|keek)ass|ass(too|4all|4u|hole|photo|tr|factory|-time)|seduc(tion|tive|e|ing)|handjob|bondage|(hard|gam|por)core(?![a-zA-Z])|bbw|vagina|pimp(?!le)|squirt|(?<!con|re)futa|trann[iy]|shemale|nymph|flooz|horny|bosom|exotic|naughty|hustler|creampie|skeet|blop|dyke|strip.?teas|booty|cunt|sankaku|jav(?!elin|a)|kink|cosplay|swinger|nsfw|tush|bdsm|incest|(?<!net)flix(?!flare)|luxure|lecher|mii|boner|lingerie|(?<!le|fun)gals|hott[yi]|bang(?!alore|kok|le)|slut|spic[ey]|luscious|atheis|lewd|(?<!si)teen|kompoz|fetish|femdom|beeg|(?<!la)belle|wank|masterb|jerk|kitty|whore|fanta.[iy]|voyeur|tit[st]|kaam[au]|nubile|busty|anal[^yo]|penis|dick|puss|scandal|celeb|booru|perv|(?<!you)tube|comi[xc]|milf|mature|boob|(?<![0-9]|news|www)(18|69|34)[^0-9]|orgy|[pq]o?r[nzm]|adult|babe|sex|hentai|x.?x.?x|(?<!il)lust(?!rat)|nud[eo]|naked|gay|le[sz]b[eio]|fuc?[kqx]|wap|faa?p|j[io]zz|dirt|(?<!cir|do|ac|suc)cum(?!ulat|ber)|smut|thot|pleasure|spank|g[iy]?rl|(?<!mu)mms|upskirt|yiff|kemono|chicks|bonk|badoink|leak|rap(?=e|ing)|cock|ecchi|orgasm|fux"
     const blockRegex="://[^/=?]*("+blockedWebsitesRegex+"|"+blockedTermsRegex+")"
     const redirectTo="https://google.com"
-    
+    console.log("hello")
     
     
     function rerender(){
