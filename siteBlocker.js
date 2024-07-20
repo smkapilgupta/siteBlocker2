@@ -9,8 +9,8 @@
 // @grant        window.onurlchange
 // @grant        GM_addStyle
 // @require      http://code.jquery.com/jquery-2.2.4.js
-// @updateURL    https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js
-// @downloadURL  https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js
+// @updateURL    https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js?v=1
+// @downloadURL  https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js?v=1
 // ==/UserScript==
 
 (function() {
