@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         siteBlocker
 // @version      1.0.1
-// @description  try to take over the world!
+// @description  Script to block any site with regular expression. Redirects to google.com instead.
 // @author       Kapil Gupta
 // @match        *://*/*
 // @run-at       document-start
 // @grant        window.onurlchange
 // @grant        GM_addStyle
 // @require      http://code.jquery.com/jquery-2.2.4.js
-// @updateURL    https://drive.google.com/file/d/1khgRZBrcwlLa06OdGrQfZUqR04nAiAZn/view?usp=sharing
-// @downloadURL  https://drive.google.com/file/d/1khgRZBrcwlLa06OdGrQfZUqR04nAiAZn/view?usp=sharing
+// @updateURL    https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js
+// @downloadURL  https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js
 // ==/UserScript==
 
 
