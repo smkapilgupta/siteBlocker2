@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         siteBlocker
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.1
+// @version      1.0
 // @description  Script to block any site with regular expression. Redirects to google.com instead.
-// @author       Kapil Gupta
+// @author       https://github.com/smkapilgupta
 // @match        *://*/*
+// @icon         https://x.com/favicon.ico
 // @run-at       document-start
 // @grant        window.onurlchange
 // @grant        GM_addStyle
