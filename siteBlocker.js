@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         siteBlocker
+// @namespace    https://github.com/smkapilgupta/siteBlocker2
 // @version      1.0.1
 // @description  Script to block any site with regular expression. Redirects to google.com instead.
 // @author       Kapil Gupta
