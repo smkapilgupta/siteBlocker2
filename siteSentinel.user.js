@@ -12,8 +12,8 @@
 // @grant        GM_getValue
 // @run-at       document-idle
 // @require      http://code.jquery.com/jquery-2.2.4.js
-// @updateURL    https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js?v=1
-// @downloadURL  https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/siteBlocker.js?v=1
+// @updateURL    https://github.com/smkapilgupta/siteBlocker2/raw/main/siteSentinel.user.js?v=1
+// @downloadURL  https://github.com/smkapilgupta/siteBlocker2/raw/main/siteSentinel.user.js?v=1
 // ==/UserScript==
 
 const stocksSite="https://www.marketwatch.com/investing/stock/amzn"
