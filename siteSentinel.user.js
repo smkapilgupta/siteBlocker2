@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         siteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.0
+// @version      1.0.2
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -20,17 +20,46 @@
 const stocksSite="https://www.marketwatch.com/investing/stock/amzn"
 const priceRegex="(?<=Amazon\.com Inc[^0-9]*U\.S\.: Nasdaq[^0-9]*price[^0-9]*)[0-9]+(\.[0-9]*)?"
 const amazonStockPriceVar="AMZN_STOCK_PRICE"
-const stockPriceThreshold=175
+const orangeThreshold=175
+const orangeColor="#f79d36"
+const redThreshold=165
+const redColor="#e82e09"
+const noColor="#d4d4d4"
+const refreshPeriodMinutes=15
 
-function notify(message, type){
-  let newDiv=document.createElement("div")
-  newDiv.id="notificaiton"
-  const onClose=()=>{console.log("got here")}
-  newDiv.innerHTML=`
-    ${message}
-    <button onclick=${onClose}>Close</button>
-  `
-  document.body.appendChild(newDiv)
+function prepend(wrapper, ...elements){
+	elements.reverse()
+	elements.forEach(element=>{
+    wrapper.insertBefore(element,wrapper.firstChild)
+	})
+}
+
+function removeIfPresent(wrapper, elementId){
+	if(!wrapper)
+		return
+	if(wrapper.querySelector("#"+elementId))
+		wrapper.querySelector("#"+elementId).remove()
+}
+
+function addBubble(color){
+	const bubbleId="bubble"
+	removeIfPresent(document,bubbleId)
+	GM_addStyle("\
+		#bubble {\
+			position: fixed;\
+			top: 0%;\
+      background: white;\
+			border: 1px solid "+color+";\
+			border-radius: 15px;\
+			z-index: 10000;\
+			box-shadow: 0px 0px 5px "+color+";\
+			transform: translate(-50%, -50%);\
+      padding: 10px;\
+		}\
+	")
+	const bubble=document.createElement("div")
+	bubble.id=bubbleId
+	prepend(document.body,bubble)
 }
 
 function getFirstElementWithText(elementString, text){
@@ -50,15 +79,26 @@ function monitorSite(url,regex){
   },
   responseType: "text/html",
   onload:(response)=>{
-    console.log(GM_getValue(amazonStockPriceVar))
+    const prevStockPrice=GM_getValue(amazonStockPriceVar)
     const currentStockPrice=Number(JSON.stringify(response).match(new RegExp(regex))[0])
-    GM_setValue(amazonStockPriceVar,JSON.stringify(response).match(new RegExp(regex))[0]+" USD")
-    if(currentStockPrice<stockPriceThreshold)
-      console.log("Price dropped below threshold")
+    GM_setValue(amazonStockPriceVar,JSON.stringify(response).match(new RegExp(regex))[0])
+
+    console.log("Amazon stock Price ($): "+currentStockPrice)
+    console.log("Previous value ($): "+prevStockPrice)
+    if(currentStockPrice<redThreshold){
+      console.log("Price below threshold: "+redThreshold)
+      addBubble(redColor)
+    }
+    else if(currentStockPrice<orangeThreshold){
+      console.log("Price below threshold: "+orangeThreshold)
+      addBubble(orangeColor)
+    }
+    else{
+      addBubble(noColor)
+    }
 },
 })
 }
 
-// notify("hello world","error")
 monitorSite(stocksSite,priceRegex)
-setInterval(()=>monitorSite(stocksSite,priceRegex),900000)
+setInterval(()=>monitorSite(stocksSite,priceRegex),refreshPeriodMinutes*60*1000)
