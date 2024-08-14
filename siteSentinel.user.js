@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         siteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.4
+// @version      1.0.5
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -50,7 +50,7 @@ function addBubble(color){
 			top: 0%;\
 			border: 1px solid "+color+";\
 			border-radius: 15px;\
-			z-index: 10000;\
+			z-index: 1000000;\
 			box-shadow: 0px 0px 5px "+color+";\
 			transform: translate(-50%, -50%);\
       padding: 10px;\
