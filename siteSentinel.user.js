@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         siteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.6
+// @version      1.0.7
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -21,7 +21,7 @@ const stocksSite="https://www.marketwatch.com/investing/stock/amzn"
 const priceRegex="(?<=Amazon\.com Inc[^0-9]*U\.S\.: Nasdaq[^0-9]*price[^0-9]*)[0-9]+(\.[0-9]*)?"
 const amazonStockPriceVar="AMZN_STOCK_PRICE"
 const orangeThreshold=175
-const orangeColor="#f79d36"
+const orangeColor="#f57e00"
 const redThreshold=165
 const redColor="#e82e09"
 const noColor="#d4d4d4"
@@ -41,20 +41,45 @@ function removeIfPresent(wrapper, elementId){
 		wrapper.querySelector("#"+elementId).remove()
 }
 
-function addBubble(color){
+function lightenDarkenColor(col, amt) {
+  var usePound = false;
+  if ( col[0] == "#" ) {
+      col = col.slice(1);
+      usePound = true;
+  }
+  var num = parseInt(col,16);
+
+  var r = (num >> 16) + amt;
+  if ( r > 255 ) r = 255;
+  else if  (r < 0) r = 0;
+
+  var b = ((num >> 8) & 0x00FF) + amt;
+  if ( b > 255 ) b = 255;
+  else if  (b < 0) b = 0;
+
+  var g = (num & 0x0000FF) + amt;
+  if ( g > 255 ) g = 255;
+  else if  ( g < 0 ) g = 0;
+
+  return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+}
+
+function addBubble(hexColor){
 	const bubbleId="bubble"
 	removeIfPresent(document,bubbleId)
+	const lighterColor=lightenDarkenColor(hexColor,50)
 	GM_addStyle("\
 		#bubble {\
 			position: fixed;\
 			top: 0%;\
-			border: 1px solid "+color+";\
-			border-radius: 15px;\
-			z-index: 1000000;\
-			box-shadow: 0px 0px 5px "+color+";\
-      background-image: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(255,255,255,0.6) 100%);\
 			transform: translate(-50%, -50%);\
-      padding: 10px;\
+			z-index: 1000000;\
+			border: 1px solid "+lighterColor+";\
+			background-color:transparent;\
+			padding:10px;\
+			border-radius:15px;\
+			box-shadow: 0 0 5px "+hexColor+";\
+			background-image: radial-gradient(circle, rgba(0,0,0,0) 0%, "+hexColor+" 100%);\
 		}\
 	")
 	const bubble=document.createElement("div")
