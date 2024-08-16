@@ -29,9 +29,11 @@ function overwrite(selector, url){
   onload:(response)=>{
     const content=document.querySelector(selector)
     content.innerHTML=response.response
+    console.log("Content overwritten successfully!")
 },
 })
 }
 
 
-overwrite("div.page-wrapper",window.location.href)
+if(window.location.href!=="https://swarajyamag.com/"&& document.querySelector("#hide-partial-content"))
+  overwrite("div.page-wrapper",window.location.href)
