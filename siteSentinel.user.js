@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.11
+// @version      1.0.12
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -108,8 +108,10 @@ function monitorSite(url,regex){
   onload:(response)=>{
     const prevStockPrice=GM_getValue(amazonStockPriceVar)
     console.log("response: "+JSON.stringify(response))
-    if(!JSON.stringify(response).match(new RegExp(regex)))
+    if(!JSON.stringify(response).match(new RegExp(regex))){
       addBubble(redColor)
+      GM_setValue(amazonStockPriceVar,"0")
+    }
     const currentStockPrice=Number(JSON.stringify(response).match(new RegExp(regex))[0])
     GM_setValue(amazonStockPriceVar,JSON.stringify(response).match(new RegExp(regex))[0])
 
