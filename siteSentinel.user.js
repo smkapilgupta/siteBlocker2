@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.7
+// @version      1.0.8
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
