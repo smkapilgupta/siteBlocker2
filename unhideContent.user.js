@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         UnhideContent
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.2
+// @version      1.0.3
 // @description  Script to see paywall blocked content
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        https://swarajyamag.com/*
@@ -35,5 +35,10 @@ function overwrite(selector, url){
 }
 
 
-if(window.location.href!=="https://swarajyamag.com/"&& document.querySelector("#hide-partial-content"))
-  overwrite("div.page-wrapper",window.location.href)
+function updateRecords(){
+  if(window.location.href!=="https://swarajyamag.com/"&& document.querySelector("#hide-partial-content"))
+    overwrite("div.page-wrapper",window.location.href)
+}
+const mutationObserver=new MutationObserver(updateRecords)
+mutationObserver.observe(document, {childList: true, subtree: true});
+
