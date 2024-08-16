@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         UnhideContent
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.3
+// @version      1.0.4
 // @description  Script to see paywall blocked content
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        https://swarajyamag.com/*
+// @match        https://screenrant.com/*
 // @grant        window.onurlchange
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
@@ -18,17 +19,18 @@
 // ==/UserScript==
 
 
-function overwrite(selector, url){
+function overwrite(wrapper, url){
   GM_xmlhttpRequest({
   url: url,
   method: "GET",
   headers:{
     "Access-Control-Allow-Origin": "*",
   },
+  anonymous: true,
   responseType: "text/html",
   onload:(response)=>{
-    const content=document.querySelector(selector)
-    content.innerHTML=response.response
+    wrapper.innerHTML=response.response
+    console.log("got here: "+response.response)
     console.log("Content overwritten successfully!")
 },
 })
@@ -36,8 +38,12 @@ function overwrite(selector, url){
 
 
 function updateRecords(){
-  if(window.location.href!=="https://swarajyamag.com/"&& document.querySelector("#hide-partial-content"))
-    overwrite("div.page-wrapper",window.location.href)
+  if(window.location.href.includes("swarajyamag.com")&&window.location.href!=="https://swarajyamag.com/"&& document.querySelector("#hide-partial-content"))
+    overwrite(document.querySelector("div.page-wrapper"),window.location.href)
+  if(window.location.href.includes("screenrant.com")&&window.location.href!=="https://screenrant.com/"&& document.querySelector("#login-form-banner")){
+    overwrite(document.body,window.location.href)
+  }
+
 }
 const mutationObserver=new MutationObserver(updateRecords)
 mutationObserver.observe(document, {childList: true, subtree: true});
