@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.1.0
+// @version      1.1.1
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -104,6 +104,7 @@ function monitorSite(url,regex){
   const currentDateTime=new Date();
   const lastUpdateDateTime=GM_getValue(lastUpdateDateTimeId)
   if(lastUpdateDateTime&&(currentDateTime.getTime()-new Date(lastUpdateDateTime).getTime())<dataRefreshPeriodMinutes*60*1000)
+    refreshBubble()
     return;
   GM_xmlhttpRequest({
   url: url,
