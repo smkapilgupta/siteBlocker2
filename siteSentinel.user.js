@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.1.2
+// @version      1.2.0
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -29,6 +29,105 @@ const noColor="#d4d4d4"
 const dataRefreshPeriodMinutes=15
 const bubbleRefreshPeriodMinutes=1
 
+function createButton(id, buttonType, text, action){
+  GM_addStyle("\
+    .secondary-script-button {\
+      background:rgba(255,255,255,1);\
+      font-size:16px;\
+      cursor: pointer;\
+      border: none;\
+      text-align: center;\
+      padding: 8px 15px 5px 15px;\
+      border: 1px solid #000000;\
+      margin-left: 10px;\
+    }\
+    .primary-script-button {\
+      background:rgba(240,121,2,1);\
+      font-size:16px;\
+      color: white;\
+      cursor: pointer;\
+      border: none;\
+      text-align: center;\
+      padding: 8px 15px 5px 15px;\
+      margin-left: 10px;\
+    }\
+    .symbolic-script-button {\
+      background:rgba(255,255,255,1);\
+      font-size:16px;\
+      cursor: pointer;\
+      border: none;\
+      text-align: center;\
+      padding: 8px 15px 5px 15px;\
+      border: 1px solid #CCCCCC;\
+      margin-left: 10px;\
+      border-radius: 3000px;\
+      color: black;\
+    }\
+  ")
+  const btn=document.createElement("button")
+  btn.id=id
+  btn.textContent=text
+  btn.addEventListener("click",action)
+  if(buttonType==="primary")
+    btn.classList.add(id,"primary-script-button")
+  else if (buttonType==="secondary")
+    btn.classList.add(id,"secondary-script-button")
+  else if (buttonType==="symbolic")
+    btn.classList.add(id,"symbolic-script-button")
+  return btn
+}
+
+function generateRandomNumber(){
+    let uuid=String(crypto.randomUUID())
+    var sumOfChars=0;
+    for(let i=0;i<uuid.length;i++){
+        sumOfChars+=Number(uuid.charCodeAt(i))
+    }
+    return sumOfChars
+}
+
+function createToast(message, toastType, timeoutMs){
+  const toastContainerId="toastContainer"+String(generateRandomNumber())
+  GM_addStyle("\
+  .toastContainer{\
+    position:fixed;\
+    top:0%;\
+    left:50%;\
+    padding: 8px 15px 0px 15px;\
+    background: white;\
+    border 1px solid #d4d4d4;\
+    border-radius: 5px;\
+    z-index: 1000000;\
+    box-shadow: 0px 0px 5px #eaeaea;\
+    transform: translate(-50%,0%);\
+    float: left;\
+    display: inline;\
+  }\
+  #toastBody{\
+    font-size: 15px;\
+    display:inline-block;\
+  }\
+  ")
+  const container=document.createElement("div")
+  container.classList.add("toastContainer")
+  container.id=toastContainerId
+
+  const body=document.createElement("p")
+  body.textContent=message
+  body.id="toastBody"
+
+  const closeButton=createButton("closeToast","symbolic","X",()=>{
+    removeIfPresent(document.body,toastContainerId,undefined)
+  })
+
+  prepend(container,body,closeButton)
+  prepend(document.body,container)
+
+  setTimeout(()=>{
+    removeIfPresent(document.body,toastContainerId,undefined)
+  },timeoutMs?timeoutMs:20000)
+}
+
 function prepend(wrapper, ...elements){
   if(!wrapper)
     return
@@ -38,11 +137,13 @@ function prepend(wrapper, ...elements){
 	})
 }
 
-function removeIfPresent(wrapper, elementId){
+function removeIfPresent(wrapper, elementId, elementClass){
 	if(!wrapper)
 		return
-	if(wrapper.querySelector("#"+elementId))
+	if(elementId&&wrapper.querySelector("#"+elementId))
 		wrapper.querySelector("#"+elementId).remove()
+  if(elementClass&&wrapper.querySelector(elementClass))
+    wrapper.querySelector(elementClass).remove()
 }
 
 function lightenDarkenColor(col, amt) {
@@ -89,6 +190,9 @@ function addBubble(hexColor){
 	")
 	const bubble=document.createElement("div")
 	bubble.id=bubbleId
+  bubble.addEventListener("click",()=>{
+    createToast(amazonStockPriceVar+": "+GM_getValue(amazonStockPriceVar)+ " USD","informational")
+  })
 	prepend(document.body,bubble)
 }
 
