@@ -110,7 +110,7 @@ function monitorSite(url,regex){
     console.log("response: "+JSON.stringify(response))
     if(!JSON.stringify(response).match(new RegExp(regex))){
       addBubble(redColor)
-      GM_setValue(amazonStockPriceVar,"0")
+      GM_setValue(amazonStockPriceVar,"-1")
     }
     const currentStockPrice=Number(JSON.stringify(response).match(new RegExp(regex))[0])
     GM_setValue(amazonStockPriceVar,JSON.stringify(response).match(new RegExp(regex))[0])
