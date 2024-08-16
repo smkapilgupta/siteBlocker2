@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.9
+// @version      1.0.10
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -81,6 +81,7 @@ function addBubble(hexColor){
 			border-radius:15px;\
 			box-shadow: 0 0 5px "+hexColor+";\
 			background-image: radial-gradient(circle, rgba(0,0,0,0) 0%, "+hexColor+" 100%);\
+      			cursor: pointer;\
 		}\
 	")
 	const bubble=document.createElement("div")
