@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.2.0
+// @version      1.2.1
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -40,6 +40,7 @@ function createButton(id, buttonType, text, action){
       padding: 8px 15px 5px 15px;\
       border: 1px solid #000000;\
       margin-left: 10px;\
+      color: black;\
     }\
     .primary-script-button {\
       background:rgba(240,121,2,1);\
@@ -106,6 +107,7 @@ function createToast(message, toastType, timeoutMs){
   #toastBody{\
     font-size: 15px;\
     display:inline-block;\
+    color: black;\
   }\
   ")
   const container=document.createElement("div")
