@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         siteSentinel
+// @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
 // @version      1.0.7
 // @description  Script to monitor a wesite
