@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.12
+// @version      1.1.0
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -20,15 +20,18 @@
 const stocksSite="https://www.marketwatch.com/investing/stock/amzn"
 const priceRegex="(?<=Amazon\.com Inc[^0-9]*U\.S\.: Nasdaq[^0-9]*price[^0-9]*)[0-9]+(\.[0-9]*)?"
 const amazonStockPriceVar="AMZN_STOCK_PRICE"
+const lastUpdateDateTimeId="LAST_UPDATED_DATE_TIME"
 const orangeThreshold=175
 const orangeColor="#f57e00"
 const redThreshold=165
 const redColor="#e82e09"
 const noColor="#d4d4d4"
-const refreshPeriodMinutes=15
+const dataRefreshPeriodMinutes=15
 const bubbleRefreshPeriodMinutes=1
 
 function prepend(wrapper, ...elements){
+  if(!wrapper)
+    return
 	elements.reverse()
 	elements.forEach(element=>{
     wrapper.insertBefore(element,wrapper.firstChild)
@@ -98,6 +101,10 @@ function getFirstElementWithText(elementString, text){
 }
 
 function monitorSite(url,regex){
+  const currentDateTime=new Date();
+  const lastUpdateDateTime=GM_getValue(lastUpdateDateTimeId)
+  if(lastUpdateDateTime&&(currentDateTime.getTime()-new Date(lastUpdateDateTime).getTime())<dataRefreshPeriodMinutes*60*1000)
+    return;
   GM_xmlhttpRequest({
   url: url,
   method: "GET",
@@ -114,6 +121,7 @@ function monitorSite(url,regex){
     }
     const currentStockPrice=Number(JSON.stringify(response).match(new RegExp(regex))[0])
     GM_setValue(amazonStockPriceVar,JSON.stringify(response).match(new RegExp(regex))[0])
+    GM_setValue(lastUpdateDateTimeId,currentDateTime.toISOString())
 
     console.log("Amazon stock Price ($): "+currentStockPrice)
     console.log("Previous value ($): "+prevStockPrice)
@@ -147,7 +155,7 @@ function refreshBubble(){
 }
 
 monitorSite(stocksSite,priceRegex)
-setInterval(()=>monitorSite(stocksSite,priceRegex),refreshPeriodMinutes*60*1000)
+setInterval(()=>monitorSite(stocksSite,priceRegex),bubbleRefreshPeriodMinutes*60*1000)
 setInterval(()=>refreshBubble(),bubbleRefreshPeriodMinutes*60*1000)
 
 
