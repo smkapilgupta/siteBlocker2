@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.8
+// @version      1.0.9
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -26,6 +26,7 @@ const redThreshold=165
 const redColor="#e82e09"
 const noColor="#d4d4d4"
 const refreshPeriodMinutes=15
+const bubbleRefreshPeriodMinutes=1
 
 function prepend(wrapper, ...elements){
 	elements.reverse()
@@ -125,5 +126,25 @@ function monitorSite(url,regex){
 })
 }
 
+function refreshBubble(){
+  const storeStockValue=GM_getValue(amazonStockPriceVar)
+
+  if(storeStockValue<redThreshold){
+    addBubble(redColor)
+  }
+  else if(storeStockValue<orangeThreshold){
+    addBubble(orangeColor)
+  }
+  else{
+    addBubble(noColor)
+  }
+}
+
 monitorSite(stocksSite,priceRegex)
 setInterval(()=>monitorSite(stocksSite,priceRegex),refreshPeriodMinutes*60*1000)
+setInterval(()=>refreshBubble(),bubbleRefreshPeriodMinutes*60*1000)
+
+
+
+
+
