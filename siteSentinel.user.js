@@ -183,11 +183,11 @@ function addBubble(hexColor){
 			z-index: 1000000;\
 			border: 1px solid "+lighterColor+";\
 			background-color:transparent;\
-			padding:10px;\
+			padding:15px;\
 			border-radius:15px;\
 			box-shadow: 0 0 5px "+hexColor+";\
 			background-image: radial-gradient(circle, rgba(0,0,0,0) 0%, "+hexColor+" 100%);\
-      			cursor: pointer;\
+			cursor: pointer;\
 		}\
 	")
 	const bubble=document.createElement("div")
