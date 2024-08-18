@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.3.2
+// @version      1.3.3
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -282,7 +282,7 @@ function addBubble(hexColor){
     sentinels.forEach(sentinel=>{
       message=message+sentinel.key+": "+GM_getValue(sentinel.key)+"\n"
     })
-    message=message+"\nLast updated on: "+(new Date(GM_getValue(lastUpdateDateTimeId).toString()))
+    message=message+"\nLast updated on: "+GM_getValue(lastUpdateDateTimeId)
     createToast(message,"informational")
   })
 	prepend(document.body,bubble)
