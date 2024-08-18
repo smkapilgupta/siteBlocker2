@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.3.1
+// @version      1.3.2
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -147,7 +147,94 @@ function removeIfPresent(wrapper, elementId, elementClass){
     wrapper.querySelector(elementClass).remove()
 }
 
-function lightenDarkenColor(col, amt) {
+function hslToRgb(hsl) {
+	const h = hsl[0] / 360;
+	const s = hsl[1] / 100;
+	const l = hsl[2] / 100;
+	let t2;
+	let t3;
+	let val;
+
+	if (s === 0) {
+		val = l * 255;
+		return [val, val, val];
+	}
+
+	if (l < 0.5) {
+		t2 = l * (1 + s);
+	} else {
+		t2 = l + s - l * s;
+	}
+
+	const t1 = 2 * l - t2;
+
+	const rgb = [0, 0, 0];
+	for (let i = 0; i < 3; i++) {
+		t3 = h + 1 / 3 * -(i - 1);
+		if (t3 < 0) {
+			t3++;
+		}
+
+		if (t3 > 1) {
+			t3--;
+		}
+
+		if (6 * t3 < 1) {
+			val = t1 + (t2 - t1) * 6 * t3;
+		} else if (2 * t3 < 1) {
+			val = t2;
+		} else if (3 * t3 < 2) {
+			val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
+		} else {
+			val = t1;
+		}
+
+		rgb[i] = val * 255;
+	}
+
+	return rgb;
+}
+
+function rgbToHsl (rgb) {
+	const r = rgb[0] / 255;
+	const g = rgb[1] / 255;
+	const b = rgb[2] / 255;
+	const min = Math.min(r, g, b);
+	const max = Math.max(r, g, b);
+	const delta = max - min;
+	let h;
+	let s;
+
+	if (max === min) {
+		h = 0;
+	} else if (r === max) {
+		h = (g - b) / delta;
+	} else if (g === max) {
+		h = 2 + (b - r) / delta;
+	} else if (b === max) {
+		h = 4 + (r - g) / delta;
+	}
+
+	h = Math.min(h * 60, 360);
+
+	if (h < 0) {
+		h += 360;
+	}
+
+	const l = (min + max) / 2;
+
+	if (max === min) {
+		s = 0;
+	} else if (l <= 0.5) {
+		s = delta / (max + min);
+	} else {
+		s = delta / (2 - max - min);
+	}
+
+	return [h, s * 100, l * 100];
+}
+
+function lightenDarkenColor(col, percentIncrease) {
   var usePound = false;
   if ( col[0] == "#" ) {
       col = col.slice(1);
@@ -155,37 +242,36 @@ function lightenDarkenColor(col, amt) {
   }
   var num = parseInt(col,16);
 
-  var r = (num >> 16) + amt;
-  if ( r > 255 ) r = 255;
-  else if  (r < 0) r = 0;
+  var r = (num >> 16);
 
-  var b = ((num >> 8) & 0x00FF) + amt;
-  if ( b > 255 ) b = 255;
-  else if  (b < 0) b = 0;
+  var g = ((num >> 8) & 0x00FF);
 
-  var g = (num & 0x0000FF) + amt;
-  if ( g > 255 ) g = 255;
-  else if  ( g < 0 ) g = 0;
-
-  return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+  var b = (num & 0x0000FF);
+  let hsl=rgbToHsl([r,g,b]);
+  hsl[2]=hsl[2]+percentIncrease
+  if(hsl[2]>100)
+    hsl[2]=100
+  hsl[2]=hsl[2]>94?hsl[2]:94
+  let rgb=hslToRgb(hsl)
+  return (usePound?"#":"") + (rgb[2] | (rgb[1] << 8) | (rgb[0] << 16)).toString(16);
 }
 
 function addBubble(hexColor){
 	const bubbleId="bubble"
 	removeIfPresent(document,bubbleId)
-	const lighterColor=lightenDarkenColor(hexColor,50)
+	const lighterColor=lightenDarkenColor(hexColor,40)
 	GM_addStyle("\
 		#bubble {\
 			position: fixed;\
 			top: 0%;\
 			transform: translate(-50%, -50%);\
 			z-index: 1000000;\
-			border: 1px solid "+lighterColor+";\
+			border: 2px solid "+lighterColor+";\
 			background-color:transparent;\
 			padding:15px;\
 			border-radius:15px;\
-			box-shadow: 0 0 5px "+hexColor+";\
-			background-image: radial-gradient(circle, rgba(0,0,0,0) 0%, "+hexColor+" 100%);\
+			box-shadow: 2px 2px 5px "+hexColor+", inset -2px -2px 5px "+hexColor+";\
+			background-image: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);\
 			cursor: pointer;\
 		}\
 	")
