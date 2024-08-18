@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.3.0
+// @version      1.3.1
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -266,7 +266,6 @@ function monitorSites(){
 
 monitorSites()
 setInterval(()=>monitorSites(), bubbleRefreshPeriodMinutes*60*1000)
-setInterval(()=>refreshBubble(), bubbleRefreshPeriodMinutes*60*1000)
 
 
 
