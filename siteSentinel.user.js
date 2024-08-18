@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.3.4
+// @version      1.3.5
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -113,7 +113,7 @@ function createToast(message, toastType, timeoutMs){
   container.classList.add("toastContainer")
   container.id=toastContainerId
 
-  const body=document.createElement("p")
+  const body=document.createElement("div")
   body.textContent=message
   body.id="toastBody"
 
