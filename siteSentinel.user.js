@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.3.7
+// @version      1.3.8
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -100,7 +100,7 @@ function createToast(message, toastType, timeoutMs){
     background: white;\
     border 1px solid #d4d4d4;\
     border-radius: 5px;\
-    z-index: 1000000;\
+    z-index: 100000000000000000000000000000;\
     box-shadow: 0px 0px 5px #a0a0a0;\
     transform: translate(-50%,0%);\
     float: left;\
@@ -273,7 +273,7 @@ function addBubble(hexColor){
 			position: fixed;\
 			top: 0%;\
 			transform: translate(-50%, -50%);\
-			z-index: 1000000;\
+			z-index: 100000000000000000000000000000;\
 			border: 2px solid "+lighterColor+";\
 			background-color:transparent;\
 			padding:15px;\
