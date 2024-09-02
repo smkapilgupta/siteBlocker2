@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SiteSentinel
 // @namespace    https://github.com/smkapilgupta
-// @version      1.3.9
+// @version      1.3.10
 // @description  Script to monitor a wesite
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -32,6 +32,13 @@ keys?.forEach((key,index)=>{
                  isRed:new Function('return ' + isRedFunctions[index])()
                  })
 })
+if(!keys){
+  GM_setValue("keys",[])
+  GM_setValue("urls",[])
+  GM_setValue("regexs",[])
+  GM_setValue("isOrangeFunctions",[])
+  GM_setValue("isRedFunctions",[])
+}
 const lastUpdateDateTimeId="LAST_UPDATED_DATE_TIME"
 const orangeColor="#f57e00"
 const redColor="#e82e09"
