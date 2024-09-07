@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name         Doom slayer
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.18
+// @version      1.1.19
 // @description  Script to block any site with nsfw regular expression. Redirects to a different website instead.
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
 // @run-at       document-start
 // @grant        window.onurlchange
 // @grant        GM_addStyle
+// @grant        GM_setValue
+// @grant        GM_getValue
 // @require      http://code.jquery.com/jquery-2.2.4.js
 // @updateURL    https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/nsfwBlocker.user.js?v=1
 // @downloadURL  https://raw.githubusercontent.com/smkapilgupta/siteBlocker2/main/nsfwBlocker.user.js?v=1
@@ -46,6 +48,8 @@ text-align:center;
 }
 
 function obliterateNode(node){
+  if(!node)
+    return
   node.innerHTML=""
   node.innerText=""
   Object.keys(node).forEach(key=>{
@@ -69,13 +73,19 @@ function udpateRecords(records){
 
 const mutationObserver=new MutationObserver(udpateRecords)
 
-function generateRandomNumber(){
+function generateRandomNumber(rangeStart, rangeEnd){
+    let lastRN=GM_getValue("lastRN")
+    lastRN=lastRN?lastRN:0
     let uuid=String(crypto.randomUUID())
     var sumOfChars=0;
     for(let i=0;i<uuid.length;i++){
         sumOfChars+=Number(uuid.charCodeAt(i))
     }
-    return sumOfChars
+    let newRN= rangeStart+(lastRN+sumOfChars)%(rangeEnd-rangeStart+1)
+    if(newRN === lastRN)
+        newRN=rangeStart+(lastRN+sumOfChars+1)%(rangeEnd-rangeStart+1)
+    GM_setValue("lastRN",newRN)
+    return newRN
 }
 
 function checkNBlock() {
@@ -87,7 +97,7 @@ function checkNBlock() {
         console.log("URL matched with block regex")
         mutationObserver.observe(document, {childList: true, subtree: true});
         rerender()
-        window.location.replace(redirectTo[generateRandomNumber()%redirectTo.length])
+        window.location.replace(redirectTo[generateRandomNumber(0,redirectTo.length-1)])
 
     }
     else{
