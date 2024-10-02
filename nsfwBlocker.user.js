@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Tomb raider
+// @name         rotr
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.29
+// @version      1.1.30
 // @description  Script to block any site with nsfw regular expression. Redirects to a different website instead.
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
