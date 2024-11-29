@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.2
+// @version      1.0.3
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -30,7 +30,7 @@ function obliterateNode(node){
 
 function udpateRecords(records){
   document.querySelectorAll("div").forEach(node=>{
-    if(window.location.href.includes("youtube.com/results")&&node.classList.contains("ytd-rich-shelf-renderer") || window.location.href.match(new RegExp(".*youtube.com/$"))&&node.classList.contains("ytd-rich-grid-renderer") || window.location.href.includes("youtube.com/watch")&&node.classList.contains("ytd-watch-next-secondary-results-renderer"))
+    if(window.location.href.includes("youtube.com/results")&&(node.classList.contains("ytd-rich-shelf-renderer")||node.classList.contains("ytd-reel-shelf-renderer")) || window.location.href.match(new RegExp(".*youtube.com/$"))&&node.classList.contains("ytd-rich-grid-renderer") || window.location.href.includes("youtube.com/watch")&&node.classList.contains("ytd-watch-next-secondary-results-renderer"))
       setTimeout(()=>obliterateNode(node),0)
   })
 }
