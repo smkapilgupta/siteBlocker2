@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         UnhideContent
 // @namespace    https://github.com/smkapilgupta
-// @version      1.0.4
+// @version      1.0.5
 // @description  Script to see paywall blocked content
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        https://swarajyamag.com/*
 // @match        https://screenrant.com/*
+// @match        https://www.makeuseof.com/*
 // @grant        window.onurlchange
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
@@ -40,9 +41,10 @@ function overwrite(wrapper, url){
 function updateRecords(){
   if(window.location.href.includes("swarajyamag.com")&&window.location.href!=="https://swarajyamag.com/"&& document.querySelector("#hide-partial-content"))
     overwrite(document.querySelector("div.page-wrapper"),window.location.href)
-  if(window.location.href.includes("screenrant.com")&&window.location.href!=="https://screenrant.com/"&& document.querySelector("#login-form-banner")){
+  if(window.location.href.includes("screenrant.com")&&window.location.href!=="https://screenrant.com/"&& document.querySelector("#login-form-banner"))
     overwrite(document.body,window.location.href)
-  }
+  if(window.location.href.includes("makeuseof.com")&&window.location.href!=="https://www.makeuseof.com/"&& document.querySelector("#login-form-drawer"))
+    overwrite(document.body,window.location.href)
 
 }
 const mutationObserver=new MutationObserver(updateRecords)
