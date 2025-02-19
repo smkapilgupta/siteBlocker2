@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         doom slayer rocks hell
+// @name         flight simulator
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.42
+// @version      1.1.43
 // @description  Script to block any site with nsfw regular expression. Redirects to a different website instead.
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
