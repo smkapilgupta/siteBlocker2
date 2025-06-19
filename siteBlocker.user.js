@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         SiteBlocker
+// @name         Site blocker
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.0
+// @version      1.0.1
 // @description  Script to block any site with nsfw regular expression. Redirects to a different website instead.
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
