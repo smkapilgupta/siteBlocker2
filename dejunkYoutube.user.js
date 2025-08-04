@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.2
+// @version      1.1.3
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -31,7 +31,7 @@ function obliterateNode(node){
 function udpateRecords(records){
   document.querySelectorAll("div").forEach(node=>{
     if(window.location.href.includes("youtube.com/results") || window.location.href.includes("youtube.com/shorts") ){
-      if(node.classList.contains("ytd-rich-shelf-renderer") || node.classList.contains("ytd-reel-shelf-renderer") || node.classList.contains("ytd-reel-video-renderer")|| node.classList.contains("reel-shelf-items")|| node.classList.contains("YtShortsCarouselCarouselWrapper"))
+      if(node.classList.contains("ytd-rich-shelf-renderer") || node.classList.contains("ytd-reel-shelf-renderer") || node.classList.contains("reel-video-in-sequence-new") || node.classList.contains("ytd-reel-video-renderer")|| node.classList.contains("reel-shelf-items")|| node.classList.contains("YtShortsCarouselCarouselWrapper"))
         setTimeout(()=>obliterateNode(node),0)
     }
     else if(window.location.href.includes("youtube.com/watch")){
@@ -55,7 +55,11 @@ function udpateRecords(records){
         setTimeout(()=>obliterateNode(node),0)
       })
   }
-
+  if(window.location.href.includes("youtube.com/results")){
+      document.querySelectorAll("grid-shelf-view-model").forEach(node=>{
+        setTimeout(()=>obliterateNode(node),0)
+      })
+  }
 }
 
 const mutationObserver=new MutationObserver(udpateRecords)
