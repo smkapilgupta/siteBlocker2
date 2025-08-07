@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.4
+// @version      1.1.5
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -29,49 +29,46 @@ function obliterateNode(node){
 }
 
 function udpateRecords(records){
-  // document.querySelectorAll("div").forEach(node=>{
-  //   if(window.location.href.includes("youtube.com/results") || window.location.href.includes("youtube.com/shorts") ){
-  //     if(node.classList.contains("ytd-rich-shelf-renderer") || node.classList.contains("ytd-reel-shelf-renderer") || node.classList.contains("reel-video-in-sequence-new") || node.classList.contains("ytd-reel-video-renderer")|| node.classList.contains("reel-shelf-items")|| node.classList.contains("YtShortsCarouselCarouselWrapper"))
-  //       setTimeout(()=>obliterateNode(node),0)
-  //   }
-  //   else if(window.location.href.includes("youtube.com/watch")){
-  //     if(node.classList.contains("ytd-watch-next-secondary-results-renderer")||node.classList.contains("single-column-watch-next-modern-panels")||node.classList.contains("videowall-endscreen"))
-  //             setTimeout(()=>obliterateNode(node),0)
-  //   }
-  //   else if(!window.location.href.includes("youtube.com/@")){
-  //     if(node.classList.contains("ytd-rich-grid-renderer")||node.classList.contains("rich-grid-renderer-contents"))
-  //             setTimeout(()=>obliterateNode(node),0)
-  //   }
-  // })
+  document.querySelectorAll("div").forEach(node=>{
+    if(window.location.href.includes("youtube.com/results") || window.location.href.includes("youtube.com/shorts") ){
+      if(node.classList.contains("ytd-rich-shelf-renderer") || node.classList.contains("ytd-reel-shelf-renderer") || node.classList.contains("reel-video-in-sequence-new") || node.classList.contains("ytd-reel-video-renderer")|| node.classList.contains("reel-shelf-items")|| node.classList.contains("YtShortsCarouselCarouselWrapper"))
+        setTimeout(()=>obliterateNode(node),0)
+    }
+    else if(window.location.href.includes("youtube.com/watch")){
+      if(node.classList.contains("ytd-watch-next-secondary-results-renderer")||node.classList.contains("single-column-watch-next-modern-panels")||node.classList.contains("videowall-endscreen"))
+              setTimeout(()=>obliterateNode(node),0)
+    }
+    else if(!window.location.href.includes("youtube.com/@")){
+      if(node.classList.contains("ytd-rich-grid-renderer")||node.classList.contains("rich-grid-renderer-contents"))
+              setTimeout(()=>obliterateNode(node),0)
+    }
+  })
 
   document.querySelectorAll('a#endpoint').forEach(node => {
-    // Avoid duplicate '/videos'
+    // Add video links in subscribed channels. Avoid duplicate '/videos'
     if (!node.href.endsWith('/videos')) {
       node.href = node.href.replace(/\/$/, "") + "/videos";
     }
   });
-  if(window.location.href.includes("m.youtube.com/watch")){
-      document.querySelectorAll("ytm-item-section-renderer").forEach(node=>{
-        setTimeout(()=>obliterateNode(node),0)
-      })
-  }
+
+
+  //Next video suggestion
+  document.querySelectorAll("ytm-item-section-renderer").forEach(node=>{
+    setTimeout(()=>obliterateNode(node),0)
+  })
+
+  //Shorts in sarch results
   if(window.location.href.includes("youtube.com/results")){
       document.querySelectorAll("grid-shelf-view-model").forEach(node=>{
         setTimeout(()=>obliterateNode(node),0)
       })
   }
-  if(window.location.href==="https://www.youtube.com/"){
-      document.querySelectorAll("div#contents").forEach(node=>{
-        setTimeout(()=>obliterateNode(node),0)
-      })
-  }
+
+  //Shorts
   document.querySelectorAll("div#shorts-container").forEach(node=>{
     setTimeout(()=>obliterateNode(node),0)
   })
 
-  document.querySelectorAll("ytd-rich-section-renderer").forEach(node=>{
-    setTimeout(()=>obliterateNode(node),0)
-  })
 
 }
 
