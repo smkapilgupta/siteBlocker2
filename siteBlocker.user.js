@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Site blocker
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.1
+// @version      1.0.2
 // @description  Script to block any site with nsfw regular expression. Redirects to a different website instead.
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -19,7 +19,7 @@
 'use strict';
 const blockedWebsitesRegex="youtube"
 const blockRegex="://[^/=?]*("+blockedWebsitesRegex+")"
-const redirectTo=["https://www.howtogeek.com", "https://techcrunch.com/","https://www.makeuseof.com","https://gameranx.com","https://swarajyamag.com/","https://www.businessinsider.in", "https://store.steampowered.com", "https://venturebeat.com", "https://www.firstpost.com","https://www.engadget.com"]
+const redirectTo=["https://www.howtogeek.com", "https://techcrunch.com/","https://www.makeuseof.com","https://gameranx.com","https://swarajyamag.com/", "https://store.steampowered.com", "https://venturebeat.com", "https://www.firstpost.com","https://www.engadget.com"]
 
 
 function rerender(){
