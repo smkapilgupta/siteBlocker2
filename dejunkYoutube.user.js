@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.6
+// @version      1.1.7
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -29,11 +29,11 @@ function obliterateNode(node){
 
 function udpateRecords(records){
   document.querySelectorAll("div").forEach(node=>{
-    if(window.location.href.includes("youtube.com/results") || window.location.href.includes("youtube.com/shorts") ){
+    if(window.location.href.includes("www.youtube.com/results") || window.location.href.includes("youtube.com/shorts") ){
       if(node.classList.contains("ytd-rich-shelf-renderer") || node.classList.contains("ytd-reel-shelf-renderer") || node.classList.contains("reel-video-in-sequence-new") || node.classList.contains("ytd-reel-video-renderer")|| node.classList.contains("reel-shelf-items")|| node.classList.contains("YtShortsCarouselCarouselWrapper"))
         setTimeout(()=>obliterateNode(node),0)
     }
-    else if(window.location.href.includes("youtube.com/watch")){
+    else if(window.location.href.includes("www.youtube.com/watch")){
       if(node.classList.contains("ytd-watch-next-secondary-results-renderer")||node.classList.contains("single-column-watch-next-modern-panels")||node.classList.contains("videowall-endscreen"))
               setTimeout(()=>obliterateNode(node),0)
     }
@@ -57,7 +57,7 @@ function udpateRecords(records){
   })
 
   //Shorts in sarch results
-  if(window.location.href.includes("youtube.com/results")){
+  if(window.location.href.includes("www.youtube.com/results")){
       document.querySelectorAll("grid-shelf-view-model").forEach(node=>{
         setTimeout(()=>obliterateNode(node),0)
       })
