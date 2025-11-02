@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.8
+// @version      1.1.9
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -34,7 +34,7 @@ function udpateRecords(records){
         setTimeout(()=>obliterateNode(node),0)
     }
     else if(window.location.href.includes("youtube.com/watch")){
-      if(node.classList.contains("ytd-watch-next-secondary-results-renderer")||node.classList.contains("single-column-watch-next-modern-panels")||node.classList.contains("videowall-endscreen"))
+      if(node.classList.contains("ytd-watch-next-secondary-results-renderer")||node.classList.contains("single-column-watch-next-modern-panels")||node.classList.contains("ytp-fullscreen-grid-main-content"))
               setTimeout(()=>obliterateNode(node),0)
     }
     else if(!window.location.href.includes("youtube.com/@")){
@@ -52,8 +52,8 @@ function udpateRecords(records){
 
 
   //Next video suggestion
-        if(window.location.href.includes("www.youtube.com"))
-  document.querySelectorAll("ytm-item-section-renderer").forEach(node=>{
+  if(window.location.href.includes("youtube.com/watch"))
+  document.querySelectorAll("ytm-video-with-context-renderer").forEach(node=>{
     setTimeout(()=>obliterateNode(node),0)
   })
 
@@ -66,6 +66,9 @@ function udpateRecords(records){
 
   //Shorts
   document.querySelectorAll("div#shorts-container").forEach(node=>{
+    setTimeout(()=>obliterateNode(node),0)
+  })
+  document.querySelectorAll("shorts-video").forEach(node=>{
     setTimeout(()=>obliterateNode(node),0)
   })
 
