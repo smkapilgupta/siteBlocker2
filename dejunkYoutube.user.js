@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.9
+// @version      1.1.10
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -52,10 +52,19 @@ function udpateRecords(records){
 
 
   //Next video suggestion
-  if(window.location.href.includes("youtube.com/watch"))
-  document.querySelectorAll("ytm-video-with-context-renderer").forEach(node=>{
-    setTimeout(()=>obliterateNode(node),0)
-  })
+  if(window.location.href.includes("youtube.com/watch")){
+    document.querySelectorAll("ytm-video-with-context-renderer").forEach(node=>{
+      setTimeout(()=>obliterateNode(node),0)
+    })
+    //For video suggestions at the end of a video.
+    document.querySelectorAll(".ytp-ce-video").forEach(node=>{
+      setTimeout(()=>obliterateNode(node),0)
+    })
+    // For channel link at the end of a video.
+    document.querySelectorAll(".ytp-ce-channel").forEach(node=>{
+      setTimeout(()=>obliterateNode(node),0)
+    })
+  }
 
   //Shorts in sarch results
   if(window.location.href.includes("youtube.com/results")){
