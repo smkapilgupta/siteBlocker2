@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk metacritic
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.0
+// @version      1.0.1
 // @description  Script to block videos on metacritic
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.metacritic.com/*
@@ -30,7 +30,7 @@ function obliterateNode(node){
 
 function udpateRecords(records){
   document.querySelectorAll("div").forEach(node=>{
-      if(node.classList.contains("video-container"))
+      if(node.classList.contains("jwplayer"))
         setTimeout(()=>obliterateNode(node),0)
   })
 }
