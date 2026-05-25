@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk youtube
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.13
+// @version      1.1.14
 // @description  Script to block short format videos and youtube suggestions
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.youtube.com/*
@@ -29,7 +29,7 @@ function obliterateNode(node){
 
 function udpateRecords(records){
   document.querySelectorAll("div").forEach(node=>{
-    if(window.location.href.includes("youtube.com/results") || window.location.href.includes("youtube.com/shorts") ){
+    if(window.location.href.includes("youtube.com/shorts") ){
       if(node.classList.contains("ytd-rich-shelf-renderer") || node.classList.contains("ytd-reel-shelf-renderer") || node.classList.contains("reel-video-in-sequence-new") || node.classList.contains("ytd-reel-video-renderer")|| node.classList.contains("reel-shelf-items")|| node.classList.contains("YtShortsCarouselCarouselWrapper"))
         setTimeout(()=>obliterateNode(node),0)
     }
@@ -67,17 +67,24 @@ function udpateRecords(records){
   }
 
   //Shorts in sarch results
-  if(window.location.href.includes("youtube.com/results")){
-      document.querySelectorAll("grid-shelf-view-model").forEach(node=>{
-        setTimeout(()=>obliterateNode(node),0)
+  if (window.location.href.includes("youtube.com/results")) {
+    document
+      .querySelectorAll("grid-shelf-view-model, .ytd-shelf-renderer")
+      .forEach(node => {
+        if (
+          node.matches("grid-shelf-view-model") ||
+          [
+            "People also watched",
+            "Previously watched",
+            "Explore more",
+            "From related searches",
+            "People also search for"
+          ].some(text => node.innerText.includes(text))
+        ) {
+          setTimeout(() => obliterateNode(node), 0)
+        }
       })
-      document.querySelectorAll(".ytd-shelf-renderer").forEach(node=>{
-        if(node.innerText.includes("People also watched") || node.innerText.includes("Previously watched") || node.innerText.includes("Explore more") || node.innerText.includes("From related searches"))
-          setTimeout(()=>obliterateNode(node),0)
-    })
-
   }
-
   //Shorts
   document.querySelectorAll("div#shorts-container").forEach(node=>{
     setTimeout(()=>obliterateNode(node),0)
