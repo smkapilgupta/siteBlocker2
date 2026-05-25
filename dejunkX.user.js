@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk X
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.2
+// @version      1.0.3
 // @description  Script to block auto suggestions on X
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.x.com/*
@@ -20,10 +20,10 @@
 function obliterateNode(node){
   if(!node)
     return
-  node.innerText=""
-  Object.keys(node).forEach(key=>{
-      node[key] = undefined;
-  })
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+  node.remove();
 }
 
 function udpateRecords(records){
