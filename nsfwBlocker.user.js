@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         NSFW blocker
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.1.50
+// @version      1.1.51
 // @description  Script to block any site with nsfw regular expression. Redirects to a different website instead.
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*/*
@@ -24,11 +24,10 @@ const redirectTo=["https://www.howtogeek.com", "https://techcrunch.com/","https:
 function obliterateNode(node){
   if(!node)
     return
-  node.innerHTML=""
-  node.innerText=""
-  Object.keys(node).forEach(key=>{
-      node[key] = undefined;
-  })
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+  node.remove();
 }
 
 function udpateRecords(records){
