@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dejunk imdb
 // @namespace    https://github.com/smkapilgupta/siteBlocker2
-// @version      1.0.0
+// @version      1.0.1
 // @description  Script to block videos on imdb
 // @author       Kapil Gupta <smkapilgupta@gmail.com>
 // @match        *://*.imdb.com/*
@@ -21,11 +21,10 @@
 function obliterateNode(node){
   if(!node)
     return
-  node.innerHTML=""
-  node.innerText=""
-  Object.keys(node).forEach(key=>{
-      node[key] = undefined;
-  })
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+  node.remove();
 }
 
 function udpateRecords(records){
