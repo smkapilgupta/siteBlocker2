@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.4
+ // @version      1.0.5
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -17,11 +17,11 @@
 
      // 1. Hardcoded suggestions — customize this list.
      const ITEMS = [
-         'Kapil Gupta','smkapilgupta@gmail.com','smkapilgupta@hotmail.com','P@5c@1ine','Naukri','07','2021','2013',
+         'Kapil','smkapilgupta@gmail.com','smkapilgupta@hotmail.com','P@5c@1ine','Naukri','07','2021','2013',
        'Full-stack developer responsible for designing, developing, and maintaining distributed tools and services powering grocery inbound processes, integrating LLM-based AI across the development lifecycle, and driving technical leadership, talent development, onboarding, and process and operational excellence initiatives.',
        'Developed ML-driven automation to optimize team productivity, built graphical data visualization tools, and engineered simulation software for time-intensive hardware testing while optimizing low-level code in 5G Radio Access Network (RAT) systems.',
-          'Kapil',
-       'Gupta',
+          'Gupta',
+       'Kapil Gupta',
        'Motilal National Institute of Technology',
        'Bachelor of Technology',
        'Electronics and Communication',
