@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.5
+ // @version      1.0.6
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -127,7 +127,7 @@
      function rankItems(query) {
          const q = query.trim().toLowerCase();
 
-         if (!q) return ITEMS.slice(0, MAX_RESULTS);
+         if (!q) return [];
 
          return ITEMS
              .map((item, index) => {
