@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.2
+ // @version      1.0.3
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -25,7 +25,7 @@
        'https://www.linkedin.com/in/smkapilgupta/','19th cross road, Pragathi Layout, Doddanekundi','560037','SDE II','SDE','Samsung','Amazon','8400070599','India','Bangalore'
      ];
 
-     const MAX_RESULTS = 8;
+     const MAX_RESULTS = 3;
 
      let activeField = null;
      let selectedIndex = 0;
@@ -134,15 +134,6 @@
                  if (s === q) score = 0;
                  else if (s.startsWith(q)) score = 1;
                  else if (s.includes(q)) score = 2;
-                 else {
-                     // Fuzzy match: allow small typing mistakes.
-                     const distance = levenshtein(q, s);
-                     const threshold = Math.max(
-                         2, Math.floor(q.length * 0.4)
-                     );
-
-                     if (distance <= threshold) score = 3 + distance;
-                 }
 
                  return { item, index, score };
              })
@@ -152,28 +143,6 @@
              )
              .slice(0, MAX_RESULTS)
              .map(x => x.item);
-     }
-
-     function levenshtein(a, b) {
-         let prev = Array.from(
-             { length: b.length + 1 }, (_, i) => i
-         );
-
-         for (let i = 1; i <= a.length; i++) {
-             const curr = [i];
-
-             for (let j = 1; j <= b.length; j++) {
-                 curr[j] = Math.min(
-                     curr[j - 1] + 1,
-                     prev[j] + 1,
-                     prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
-                 );
-             }
-
-             prev = curr;
-         }
-
-         return prev[b.length];
      }
 
      // 4. Position the overlay beneath the focused field.
@@ -300,7 +269,7 @@
              event.preventDefault();
              event.stopImmediatePropagation();
              choose(selectedIndex);
-         } else if (event.key === 'Escape') {
+         } else if (event.key === 'Escape'||event.key==='Control') {
              overlay.style.display = 'none';
          }
      }, true);
