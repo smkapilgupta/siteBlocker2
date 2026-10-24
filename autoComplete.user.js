@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.6
+ // @version      1.0.7
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -40,7 +40,7 @@
 
      Object.assign(overlay.style, {
          position: 'fixed',
-         zIndex: '2147483647',
+         zIndex: '100000000000000000000000000000',
          display: 'none',
          minWidth: '240px',
          maxWidth: 'min(500px, 90vw)',
