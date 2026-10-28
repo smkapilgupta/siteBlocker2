@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.10
+ // @version      1.0.11
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -173,8 +173,12 @@
      }
 
      function render() {
-         if (!activeField || !overlay.isConnected) return;
-
+         if (!overlay.isConnected) {
+             (document.body || document.documentElement)
+            .appendChild(overlay);
+          }
+         if (!activeField) return;
+         console.log("Rendering outcomplete overlay");
          matches = rankItems(getText(activeField) || '');
          selectedIndex = 0;
          overlay.replaceChildren();
