@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.12
+ // @version      1.0.13
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -27,7 +27,7 @@
        'Electronics and Communication',
       '2500000','2000000','500000', '3000000+',
        'https://www.linkedin.com/in/smkapilgupta/','19th cross road, Pragathi Layout, Doddanekundi','560037','SDE II','SDE','Samsung R&D Institute India','Amazon Development Center','8400070599','9164623180','India','Bangalore',
-      'Hi MOHAN,\nI would love to hear the results of the interview. Can you please let me know?\n\nThank you\nKapil Gupta'
+      "Hi MOHAN,\nI would love to hear the results of the interview. Can you please let me know?\n\nThank you\nKapil Gupta"
      ];
 
      const MAX_RESULTS = 3;
@@ -48,6 +48,7 @@
          maxWidth: 'min(500px, 90vw)',
          maxHeight: '280px',
          overflowY: 'auto',
+         whiteSpace: 'pre-wrap',
          background: '#ffffff',
          color: '#222222',
          border: '1px solid #cbd5e1',
@@ -80,50 +81,70 @@
              && !el.disabled && !el.readOnly;
      }
 
-     function getText(el) {
-         return el.isContentEditable ? el.textContent : el.value;
-     }
+    function getText(el) {
+        if (el.isContentEditable) {
+            return el.innerText;
+        }
 
-     function setText(el, value) {
-         el.focus();
+        return el.value;
+    }
 
-         if (el.isContentEditable) {
-             // Replace the editable field's contents.
-             el.textContent = value;
-             el.dispatchEvent(new InputEvent('input', {
-                 bubbles: true,
-                 inputType: 'insertText',
-                 data: value
-             }));
-             return;
-         }
+    function setText(el, value) {
+        el.focus();
 
-         // Use the native setter so React-controlled inputs are more
-         // likely to recognize the change.
-         const proto = el.tagName === 'TEXTAREA'
-             ? HTMLTextAreaElement.prototype
-             : HTMLInputElement.prototype;
+        if (el.isContentEditable) {
+            // Clear the existing content.
+            el.replaceChildren();
 
-         const setter = Object.getOwnPropertyDescriptor(
-             proto, 'value'
-         )?.set;
+            // Insert text while preserving every newline.
+            const lines = value.split('\n');
 
-         if (setter) setter.call(el, value);
-         else el.value = value;
+            lines.forEach((line, index) => {
+                if (index > 0) {
+                    el.appendChild(document.createElement('br'));
+                }
 
-         el.dispatchEvent(new InputEvent('input', {
-             bubbles: true,
-             inputType: 'insertText',
-             data: value
-         }));
+                el.appendChild(document.createTextNode(line));
+            });
 
-         el.dispatchEvent(new Event('change', { bubbles: true }));
+            el.dispatchEvent(new InputEvent('input', {
+                bubbles: true,
+                inputType: 'insertText',
+                data: value
+            }));
 
-         // Place the caret at the end when supported.
-         try {
-             el.setSelectionRange(value.length, value.length);
-         } catch (_) {}
-     }
+            return;
+        }
+
+        // Native setter for input and textarea fields.
+        const proto = el.tagName === 'TEXTAREA'
+            ? HTMLTextAreaElement.prototype
+            : HTMLInputElement.prototype;
+
+        const setter = Object.getOwnPropertyDescriptor(
+            proto, 'value'
+        )?.set;
+
+        if (setter) {
+            setter.call(el, value);
+        } else {
+            el.value = value;
+        }
+
+        el.dispatchEvent(new InputEvent('input', {
+            bubbles: true,
+            inputType: 'insertText',
+            data: value
+        }));
+
+        el.dispatchEvent(new Event('change', {
+            bubbles: true
+        }));
+
+        try {
+            el.setSelectionRange(value.length, value.length);
+        } catch (_) {}
+    }
 
      // 3. Rank suggestions by how closely they match the query.
      function rankItems(query) {
