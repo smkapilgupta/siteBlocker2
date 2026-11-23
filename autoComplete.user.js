@@ -2,7 +2,7 @@
  // ==UserScript==
  // @name         Auto-complete
  // @namespace    local-autocomplete
- // @version      1.0.13
+ // @version      1.0.14
  // @description  Show matching hardcoded suggestions on focused input fields
  // @match        *://*/*
  // @run-at       document-idle
@@ -25,9 +25,9 @@
        'Motilal National Institute of Technology',
        'Bachelor of Technology',
        'Electronics and Communication',
-      '2500000','2000000','500000', '3000000+',
+      '2500000','2000000','500000', '3000000+', '30 days'
        'https://www.linkedin.com/in/smkapilgupta/','19th cross road, Pragathi Layout, Doddanekundi','560037','SDE II','SDE','Samsung R&D Institute India','Amazon Development Center','8400070599','9164623180','India','Bangalore',
-      "Hi MOHAN,\nI would love to hear the results of the interview. Can you please let me know?\n\nThank you\nKapil Gupta"
+      "Hi MOHAN,\nI would love to hear the results of the interview. Can you please let me know?\n\nThanks and regards\nKapil Gupta | 8400070599"
      ];
 
      const MAX_RESULTS = 3;
